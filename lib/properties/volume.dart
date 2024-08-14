@@ -56,7 +56,7 @@ class Volume extends DoubleProperty<VOLUME> {
             VOLUME.cubicMeters: "m3",
             VOLUME.liters: "l",
             VOLUME.imperialGallons: "gal",
-            VOLUME.usGallons: "Gl",
+            VOLUME.usGallons: "gal",
             VOLUME.imperialPints: "",
             VOLUME.usPints: "",
             VOLUME.milliliters: "ml",
