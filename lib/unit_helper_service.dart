@@ -33,7 +33,6 @@ class UnitConverterHelper {
     String measurementType, {
     String selectedLanguage = "en",
   }) {
-
     // print("SSDD2::${unitSystemType}::$measurementType");
     List<LocalizedUnit> finalList = [];
 
@@ -93,16 +92,36 @@ class UnitConverterHelper {
   }
 
   static LocalizedUnit? getUnitByBackendKey(
-      String? backendKey, {
-        String selectedLanguage = "en",
-      }){
-    if(backendKey==null)return null;
-    LocalizedUnit? unit=  getMassUnitByBackendKey(backendKey,selectedLanguage: selectedLanguage);
-    unit ??= getVolumeUnitByBackendKey(backendKey,selectedLanguage: selectedLanguage);
+    String? backendKey, {
+    String selectedLanguage = "en",
+  }) {
+    if (backendKey == null) return null;
+
+    if (backendKey.toLowerCase().contains("seed")) {
+      var seedsMap = {
+        'en': 'Seed',
+        'ar': 'بذرة',
+        'es': 'Semilla',
+        'fr': 'Graine',
+        'ka': 'თესლი',
+      };
+
+      return LocalizedUnit(
+        'seeds',
+        backendKey: 'seeds',
+        symbol: seedsMap[selectedLanguage],
+        stringValue: 'seeds',
+      );
+    }
+
+    LocalizedUnit? unit =
+        getMassUnitByBackendKey(backendKey, selectedLanguage: selectedLanguage);
+
+    unit ??= getVolumeUnitByBackendKey(backendKey,
+        selectedLanguage: selectedLanguage);
     // print("dEE::${unit?.name}");
     return unit;
   }
-
 
   static LocalizedUnit? getMassUnitByBackendKey(
     String backendKey, {
@@ -114,7 +133,8 @@ class UnitConverterHelper {
       if (unit.systemNeed == UnitSystemNeed.yes &&
           unit.backendKey == backendKey) {
         String name = _getLocalizedAttribute(selectedLanguage, unit, "name");
-        String symbol = _getLocalizedAttribute(selectedLanguage, unit, "symbol");
+        String symbol =
+            _getLocalizedAttribute(selectedLanguage, unit, "symbol");
 
         return LocalizedUnit(
           name,
@@ -190,7 +210,6 @@ class UnitConverterHelper {
         String name = _getLocalizedAttribute(selectedLanguage, unit, "name");
         String symbol =
             _getLocalizedAttribute(selectedLanguage, unit, "symbol");
-
 
         return LocalizedUnit(name,
             backendKey: unit.backendKey,
